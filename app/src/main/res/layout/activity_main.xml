@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginVertical="10dp"
-        app:layout_constraintBottom_toTopOf="@id/btnGetTranscript"
+        app:layout_constraintBottom_toTopOf="@id/edtLink"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
@@ -24,6 +24,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/edtLink"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:hint="Video link or video id"
+        app:layout_constraintBottom_toTopOf="@id/btnGetTranscript"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.5" />
 
     <Button
         android:id="@+id/btnGetTranscript"
