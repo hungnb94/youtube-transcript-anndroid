@@ -3,8 +3,10 @@
 
 Retrieve subtitles/transcripts for a YouTube video.
 It supports manual and automatically generated subtitles, bulk transcript retrieval for all videos in the playlist or on the channel and does not use headless browser for scraping.
-Inspired by [Python library](https://github.com/jdepoix/youtube-transcript-api).
-[Java version](https://github.com/Thoroldvix/youtube-transcript-api)
+
+Inspired by Python library: [jdepoix/youtube-transcript-api](https://github.com/jdepoix/youtube-transcript-api)
+
+Java version: [Thoroldvix/youtube-transcript-api](https://github.com/Thoroldvix/youtube-transcript-api)
 
 ## Installation
 
