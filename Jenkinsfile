@@ -1,5 +1,10 @@
 pipeline {
 	agent any
+	environment {
+		JDK_VERSION = '17'
+		PLATFORM_VERSION = 'android-34'
+		BUILD_TOOLS_VERSION = '34.0.0'
+	}
 	options {
 		timestamps()
 	}
