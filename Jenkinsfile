@@ -1,5 +1,8 @@
 pipeline {
 	agent any
+	options {
+		timestamps()
+	}
 	stages {
 		stage('Checkout') {
 			steps {
@@ -7,25 +10,25 @@ pipeline {
 			}
 		}
 		stage('Build') {
-		    agent {
-                dockerfile {
-                    dir 'cicd/androidsdk'
-                    args "--network host -v \"$HOME/.gradle\":/root/.gradle"
-                    reuseNode true
-                }
-            }
+			agent {
+				dockerfile {
+					dir 'cicd/androidsdk'
+					args "--network host -v \"$HOME/.gradle\":/root/.gradle"
+					reuseNode true
+				}
+			}
 			steps {
 				sh './gradlew assembleDebug'
 			}
 		}
 		stage('Test') {
-		    agent {
-                dockerfile {
-                    dir 'cicd/androidsdk'
-                    args "--network host -v \"$HOME/.gradle\":/root/.gradle"
-                    reuseNode true
-                }
-            }
+			agent {
+				dockerfile {
+					dir 'cicd/androidsdk'
+					args "--network host -v \"$HOME/.gradle\":/root/.gradle"
+					reuseNode true
+				}
+			}
 			steps {
 				sh './gradlew test'
 			}
