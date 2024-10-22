@@ -16,8 +16,8 @@ pipeline {
 		}
 		stage('Build') {
 			agent {
-				docker {
-					image 'hungnb94/androidsdklinux'
+				dockerfile {
+					dir 'cicd/docker/androidsdk'
 					additionalBuildArgs "--build-arg JDK_VERSION=$JDK_VERSION \
 						--build-arg PLATFORM_VERSION=$PLATFORM_VERSION \
 						--build-arg BUILD_TOOLS_VERSION=$BUILD_TOOLS_VERSION"
@@ -31,8 +31,8 @@ pipeline {
 		}
 		stage('Test') {
 			agent {
-				docker {
-					image 'hungnb94/androidsdklinux'
+				dockerfile {
+					dir 'cicd/docker/androidsdk'
 					additionalBuildArgs "--build-arg JDK_VERSION=$JDK_VERSION \
 						--build-arg PLATFORM_VERSION=$PLATFORM_VERSION \
 						--build-arg BUILD_TOOLS_VERSION=$BUILD_TOOLS_VERSION"

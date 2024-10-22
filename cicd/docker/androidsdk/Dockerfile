@@ -1,5 +1,4 @@
-ARG JDK_VERSION=17
-ARG PLATFORM_VERSION=android-34
-ARG BUILD_TOOLS_VERSION=34.0.0
-
 FROM hungnb94/androidsdklinux
+
+RUN sdkmanager "platforms;android-34"
+RUN sdkmanager "build-tools;34.0.0"
