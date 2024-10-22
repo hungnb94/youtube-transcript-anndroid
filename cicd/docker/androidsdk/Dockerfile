@@ -1,4 +1,5 @@
-FROM androidsdk/android-30
+ARG JDK_VERSION=17
+ARG PLATFORM_VERSION=android-34
+ARG BUILD_TOOLS_VERSION=34.0.0
 
-RUN apt-get update
-RUN apt-get install -y openjdk-11-jdk
+FROM --platform=linux/amd64 hungnb94/androidsdklinux
