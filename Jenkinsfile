@@ -12,7 +12,7 @@ pipeline {
 		stage('Build') {
 			agent {
 				dockerfile {
-					dir 'cicd/androidsdk'
+					dir 'docker/androidsdk'
 					args "--network host -v \"$HOME/.gradle\":/root/.gradle"
 					reuseNode true
 				}
@@ -24,7 +24,7 @@ pipeline {
 		stage('Test') {
 			agent {
 				dockerfile {
-					dir 'cicd/androidsdk'
+					dir 'docker/androidsdk'
 					args "--network host -v \"$HOME/.gradle\":/root/.gradle"
 					reuseNode true
 				}
