@@ -18,7 +18,11 @@ pipeline {
 			agent {
 				dockerfile {
 					dir 'cicd/docker/androidsdk'
-					args "--network host -v \"$HOME/.gradle\":/root/.gradle"
+					args "--network host \
+					 -v \"$HOME/.gradle\":/root/.gradle \
+					 --build-arg JDK_VERSION=$JDK_VERSION \
+					 --build-arg PLATFORM_VERSION=$PLATFORM_VERSION \
+					 --build-arg BUILD_TOOLS_VERSION=$BUILD_TOOLS_VERSION"
 					reuseNode true
 				}
 			}
