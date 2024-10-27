@@ -1,10 +1,5 @@
 pipeline {
 	agent any
-	environment {
-		JDK_VERSION = '17'
-		PLATFORM_VERSION = 'android-34'
-		BUILD_TOOLS_VERSION = '34.0.0'
-	}
 	options {
 		timestamps()
 	}
@@ -18,7 +13,7 @@ pipeline {
 			agent {
 				dockerfile {
 					dir 'cicd/docker/androidsdk'
-// 					additionalBuildArgs "-u root"
+					additionalBuildArgs "--user root:root"
 					reuseNode true
 				}
 			}
@@ -30,7 +25,7 @@ pipeline {
 			agent {
 				dockerfile {
 					dir 'cicd/docker/androidsdk'
-// 					additionalBuildArgs "-u root"
+					additionalBuildArgs "--user root:root"
 					reuseNode true
 				}
 			}
