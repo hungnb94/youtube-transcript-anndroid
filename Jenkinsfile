@@ -13,7 +13,7 @@ pipeline {
 			agent {
 				dockerfile {
 					dir 'cicd/docker/androidsdk'
-					additionalBuildArgs "--user root:root"
+					args "--user root:root -v $HOME/.gradle:/root/.gradle"
 					reuseNode true
 				}
 			}
@@ -25,7 +25,7 @@ pipeline {
 			agent {
 				dockerfile {
 					dir 'cicd/docker/androidsdk'
-					additionalBuildArgs "--user root:root"
+					args "--user root:root -v $HOME/.gradle:/root/.gradle"
 					reuseNode true
 				}
 			}

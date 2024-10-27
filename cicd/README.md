@@ -27,5 +27,6 @@ docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 - Install the default plugins. This will take several minutes
 - Install additional plugins needed
   - Install Docker Pipeline plugin
+  - Install Pipeline: Stage View plugin
 
 ## Create a new Pipeline Item
