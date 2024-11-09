@@ -1,7 +1,10 @@
 package com.leoh.youtubetranscript
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -9,10 +12,16 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.franmontiel.persistentcookiejar.ClearableCookieJar
+import com.franmontiel.persistentcookiejar.PersistentCookieJar
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
 import com.leoh.transcript.OkHttpYoutubeClient
 import io.github.thoroldvix.api.YoutubeClient
 import io.github.thoroldvix.api.YoutubeTranscriptApi
 import io.github.thoroldvix.internal.TranscriptApiFactory
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 import java.util.regex.Pattern
@@ -35,8 +44,22 @@ class MainActivity : AppCompatActivity() {
 		}
 
 		edtYoutubeLink = findViewById(R.id.edtLink)
-		edtYoutubeLink.setText("https://www.youtube.com/watch?v=hBtxSzKhM44")
 		btnGetTranscript = findViewById(R.id.btnGetTranscript)
+		edtYoutubeLink.setText("https://www.youtube.com/watch?v=hBtxSzKhM44")
+		edtYoutubeLink.setOnEditorActionListener { _, actionId, _ ->
+			if (actionId == EditorInfo.IME_ACTION_DONE) {
+				val inputMethodManager = getSystemService(InputMethodManager::class.java)
+				inputMethodManager.hideSoftInputFromWindow(
+					edtYoutubeLink.windowToken,
+					InputMethodManager.HIDE_NOT_ALWAYS,
+				)
+				edtYoutubeLink.clearFocus()
+				btnGetTranscript.performClick()
+				return@setOnEditorActionListener true
+			} else {
+				return@setOnEditorActionListener false
+			}
+		}
 		tvContent = findViewById(R.id.tvContent)
 		loadingView = findViewById(R.id.loadingView)
 		btnGetTranscript.setOnClickListener {
@@ -50,7 +73,7 @@ class MainActivity : AppCompatActivity() {
 		runOnUiThread {
 			loadingView.visibility = View.VISIBLE
 		}
-		val youtubeClient: YoutubeClient = OkHttpYoutubeClient()
+		val youtubeClient: YoutubeClient = OkHttpYoutubeClient(getOkhttpClient())
 
 		val youtubeTranscriptApi: YoutubeTranscriptApi =
 			TranscriptApiFactory.createWithClient(youtubeClient)
@@ -68,6 +91,20 @@ class MainActivity : AppCompatActivity() {
 		tvContent.post {
 			loadingView.visibility = View.GONE
 		}
+	}
+
+	private fun getOkhttpClient(): OkHttpClient {
+		val cookieJar: ClearableCookieJar =
+			PersistentCookieJar(SetCookieCache(), SharedPrefsCookiePersistor(this))
+		val loggingInterceptor =
+			HttpLoggingInterceptor { message ->
+				Log.d("OkhttpClient", message.take(1000))
+			}.setLevel(HttpLoggingInterceptor.Level.BODY)
+		return OkHttpClient
+			.Builder()
+			.cookieJar(cookieJar)
+			.addInterceptor(loggingInterceptor)
+			.build()
 	}
 
 	private fun getVideoId(): String {

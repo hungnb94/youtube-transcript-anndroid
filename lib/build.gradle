@@ -38,6 +38,7 @@ android {
 dependencies {
     api(libs.youtube.transcript.api)
     api(libs.stax.api)
+    implementation(platform(libs.okhttp.bom))
     implementation(libs.okhttp)
 
     testImplementation libs.junit
